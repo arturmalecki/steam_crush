@@ -4,10 +4,9 @@ Game.Views.footerInfo = function(game, options) {
       options = options || {},
       text;
 
-      group.x = 10;
-      group.y = game.world.height - 37;
+  group.x = 10;
+  group.y = game.world.height - 37;
 
-      game.add.text(0, 0, "Created by gameboxZ.org\nVersion: " + options.version, textStyle, group);
-
+  game.add.text(0, 0, "Created by gameboxZ.org\nVersion: " + options.version, textStyle, group);
 };
 

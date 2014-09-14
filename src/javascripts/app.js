@@ -7,11 +7,10 @@ var Game = {
       }
     }(),
     Global: {
-        menuItemFadeDelay: 75
+      menuItemFadeDelay: 75
     },
     Views: {},
-    Helpers: {},
     Animations: {},
-    version: '0.0.1',
+    version: '0.0.2',
     parentId: 'zmobi-crush-container'
 };
