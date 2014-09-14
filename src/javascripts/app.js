@@ -7,7 +7,8 @@ var Game = {
       }
     }(),
     Global: {
-      menuItemFadeDelay: 75
+      menuItemFadeDelay: 75,
+      paused: false
     },
     Views: {},
     Animations: {},
