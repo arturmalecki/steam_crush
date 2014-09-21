@@ -6,9 +6,15 @@ var Game = {
         return window.gameAssetsPath;
       }
     }(),
-    Global: {
+    G: {
       menuItemFadeDelay: 75,
-      paused: false
+      paused: false,
+      gemSize: 75,
+      gemSpacing: 2,
+      gemSizeWithSpacing: 77
+    },
+    S: {
+
     },
     Views: {},
     Animations: {},
