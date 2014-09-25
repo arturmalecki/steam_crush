@@ -3,43 +3,25 @@ Game.Game = {
   score: 0,
 
   create: function() {
-    var x = 8, y = 8;
-    Game.Views.background(this.game);
+    var cols = 8, rows = 8;
 
-    this.gameTopBar = new Game.Views.GameTopBar(this.game, this);
+    Game.Views.background(this.game);
     this.time.events.loop(Phaser.Timer.SECOND, this.updateTimeText, this);
 
-    this.itemsGroup = this.add.group();
-    this.itemsGroup.x = (this.game.width / 2) - (x * Game.G.gemSizeWithSpacing / 2);
-    this.itemsGroup.y = (this.game.height / 2) - (y * Game.G.gemSizeWithSpacing / 2);
-
-    console.log(this.game.width);
-
-    for(var i = 0; i < x; i++) {
-      for(var j = 0; j < y; j++) {
-        var a = this.itemsGroup.create(
-            Game.G.gemSizeWithSpacing * j,
-            Game.G.gemSizeWithSpacing * i,
-            'tiles', Math.floor((Math.random() * 10) + 1)
-            );
-        a.scale.x = 1.5;
-        a.scale.y = 1.5;
-      }
-    }
-
+    this.gameTopBar = new Game.Views.GameTopBar(this.game, this);
+    this.gemsBorad = new Game.GemsBoard(this.game, cols, rows, Game.G.gemSizeWithSpacing);
 
     Game.Views.footerInfo(this.game, {version: Game.version});
   },
 
-  render: function() {
-  },
-
   update: function() {
     if(!Game.G.paused) {
-      game.physics.arcade.collide(this.itemsGroup);
-      this.gameTopBar.updateScoreText(this.score)
+      this.gameTopBar.updateScoreText(this.score);
+
+      this.gemsBorad.swipe(this.game.input.mousePointer.x, this.game.input.mousePointer.y);
     }
   },
+
   pauseGame: function(){
     Game.G.paused = true;
   },
@@ -47,10 +29,12 @@ Game.Game = {
   unpauseGame: function(){
     Game.G.paused = false;
   },
+  
   updateTimeText: function() {
     this.timeCounter++;
     this.gameTopBar.updateTimeText(this.timeCounter)
   },
+
   finishGame: function() {
     Game.paused = false;
     this.timeCounter = 0;
