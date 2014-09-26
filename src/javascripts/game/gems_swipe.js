@@ -1,16 +1,22 @@
-Game.GemsSwipe = function(board, gemToSwipe) {
-  this.selectedGem = board.selectedGem;
-  this.board = board;
-  this.gemToSwipe = gemToSwipe;
+Game.GemsSwipe = function() {
+  this.selectedGem = undefined;
+  this.board       = undefined;
+  this.gemToSwipe  = undefined;
+  this.gemsHistory = undefined;
 }
 
-Game.GemsSwipe.prototype.proceed = function() {
+Game.GemsSwipe.prototype.proceed = function(board, gemToSwipe) {
+  this.selectedGem = board.selectedGem;
+  this.board       = board;
+  this.gemToSwipe  = gemToSwipe;
+
   if(this.board.isGemSelected() && this.gemToSwipe) {
     if(this.isSwipePossible()) {
       this.swipe();
-      this.board.clearSelectedGem();
+      return true;
     }
   }
+  return false;
 }
 
 Game.GemsSwipe.prototype.isSwipePossible = function() {
@@ -43,11 +49,15 @@ Game.GemsSwipe.prototype.isCursorIsOnValidPosition = function() {
   return (indexX === 1 && indexY === 0) || (indexX === 0 && indexY === 1);
 }
 
-Game.GemsSwipe.prototype.swipe = function() {
-  var //gemsHistory = Game.GemsHistory.new(this.selectedGem, this.gemToSwipe),
-      tmpX = this.selectedGem.x,
-      tmpY = this.selectedGem.y;
+Game.GemsSwipe.prototype.revert = function() {
+  this.gemsHistory.revert();
+}
 
+Game.GemsSwipe.prototype.swipe = function() {
+  var tmpX        = this.selectedGem.x,
+      tmpY        = this.selectedGem.y;
+
+  this.gemsHistory = new Game.GemsHistory(this.selectedGem, this.gemToSwipe);
   this.selectedGem.changePosition(this.gemToSwipe.x, this.gemToSwipe.y);
   this.gemToSwipe.changePosition(tmpX, tmpY);
 }

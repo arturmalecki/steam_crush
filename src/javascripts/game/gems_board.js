@@ -1,14 +1,15 @@
 Game.GemsBoard = function(game, cols, rows, gemSize) {
   Phaser.Group.call(this, game);
 
-  this.game    = game;
-  this.cols    = cols;
-  this.rows    = rows;
-  this.gemSize = gemSize;
-  this.x       = (game.width / 2) - (this.cols * gemSize / 2);
-  this.y       = (game.height / 2) - (this.rows * gemSize / 2);
-
+  this.game        = game;
+  this.cols        = cols;
+  this.rows        = rows;
+  this.gemSize     = gemSize;
+  this.x           = (game.width / 2) - (this.cols * gemSize / 2);
+  this.y           = (game.height / 2) - (this.rows * gemSize / 2);
   this.selectedGem = undefined;
+  this.swiping     = false;
+  this.gemsSwipe   = new Game.GemsSwipe(),
 
   this.populate();
 }
@@ -29,8 +30,10 @@ Game.GemsBoard.prototype.populate = function() {
 }
 
 Game.GemsBoard.prototype.selectGem = function(gem) {
-  this.selectedGem = gem;
-  this.selectedGem.angle = 10;
+  if(!this.swiping) {
+    this.selectedGem = gem;
+    this.selectedGem.angle = 10;
+  }
 }
 
 Game.GemsBoard.prototype.isGemSelected = function() {
@@ -56,11 +59,19 @@ Game.GemsBoard.prototype.clearSelectedGem = function() {
   this.selectedGem = undefined;
 }
 
+Game.GemsBoard.prototype.revertSwipe = function() {
+  this.gemsSwipe.revert();
+  this.swiping = false;
+  this.clearSelectedGem();
+}
+
 Game.GemsBoard.prototype.swipe = function(cursorX, cursorY) {
   var cursorGemPosX = this.convertToGemPosition(cursorX, 'x'),
       cursorGemPosY = this.convertToGemPosition(cursorY, 'y'),
-      gemToSwipe    = this.getGemByPos(cursorGemPosX, cursorGemPosY),
-      gemsSwipe     = new Game.GemsSwipe(this, gemToSwipe);
+      gemToSwipe    = this.getGemByPos(cursorGemPosX, cursorGemPosY);
 
-  gemsSwipe.proceed();
+  if(this.gemsSwipe.proceed(this, gemToSwipe)) {
+    this.swiping = true;
+    this.game.time.events.add(300, this.revertSwipe , this);
+  } 
 }
