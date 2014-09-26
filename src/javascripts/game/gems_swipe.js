@@ -1,4 +1,5 @@
 Game.GemsSwipe = function(board, gemToSwipe) {
+  this.selectedGem = board.selectedGem;
   this.board = board;
   this.gemToSwipe = gemToSwipe;
 }
@@ -7,6 +8,7 @@ Game.GemsSwipe.prototype.proceed = function() {
   if(this.board.isGemSelected() && this.gemToSwipe) {
     if(this.isSwipePossible()) {
       this.swipe();
+      this.board.clearSelectedGem();
     }
   }
 }
@@ -23,7 +25,7 @@ Game.GemsSwipe.prototype.isSwipePossible = function() {
 }
 
 Game.GemsSwipe.prototype.isCursorOnSelectedGem = function() {
-  return this.board.selectedGem.x === this.gemToSwipe.x && this.board.selectedGem.y === this.gemToSwipe.y;
+  return this.selectedGem.x === this.gemToSwipe.x && this.selectedGem.y === this.gemToSwipe.y;
 }
 
 Game.GemsSwipe.prototype.isCursorOutsideBoard = function() {
@@ -33,8 +35,8 @@ Game.GemsSwipe.prototype.isCursorOutsideBoard = function() {
 Game.GemsSwipe.prototype.isCursorIsOnValidPosition = function() {
   var cursorGemIndexX   = this.gemToSwipe.x / this.board.gemSize,
       cursorGemIndexY   = this.gemToSwipe.y / this.board.gemSize,
-      selectedGemIndexX = this.board.selectedGem.x / this.board.gemSize,
-      selectedGemIndexY = this.board.selectedGem.y / this.board.gemSize,
+      selectedGemIndexX = this.selectedGem.x / this.board.gemSize,
+      selectedGemIndexY = this.selectedGem.y / this.board.gemSize,
       indexX            = Math.abs(selectedGemIndexX - cursorGemIndexX),
       indexY            = Math.abs(selectedGemIndexY - cursorGemIndexY);
   
@@ -42,6 +44,11 @@ Game.GemsSwipe.prototype.isCursorIsOnValidPosition = function() {
 }
 
 Game.GemsSwipe.prototype.swipe = function() {
-  console.log('swipe');
+  var //gemsHistory = Game.GemsHistory.new(this.selectedGem, this.gemToSwipe),
+      tmpX = this.selectedGem.x,
+      tmpY = this.selectedGem.y;
+
+  this.selectedGem.changePosition(this.gemToSwipe.x, this.gemToSwipe.y);
+  this.gemToSwipe.changePosition(tmpX, tmpY);
 }
 

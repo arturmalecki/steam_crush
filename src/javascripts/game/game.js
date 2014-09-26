@@ -18,7 +18,12 @@ Game.Game = {
     if(!Game.G.paused) {
       this.gameTopBar.updateScoreText(this.score);
 
-      this.gemsBorad.swipe(this.game.input.mousePointer.x, this.game.input.mousePointer.y);
+      if(this.game.input.activePointer.justReleased()) {
+        this.gemsBorad.swipe(this.game.input.activePointer.x, this.game.input.activePointer.y);
+        this.gemsBorad.clearSelectedGem();
+      } else {
+        this.gemsBorad.swipe(this.game.input.activePointer.x, this.game.input.activePointer.y);
+      }
     }
   },
 
@@ -33,6 +38,14 @@ Game.Game = {
   updateTimeText: function() {
     this.timeCounter++;
     this.gameTopBar.updateTimeText(this.timeCounter)
+  },
+
+  render: function() {
+    this.game.debug.text("Gem selected: " + !!this.gemsBorad.selectedGem, 10, 70);
+    if(this.gemsBorad.selectedGem) {
+      this.game.debug.text("x: " + this.gemsBorad.selectedGem.x + "  y: " + this.gemsBorad.selectedGem.y, 200, 70);
+    }
+    this.game.debug.text("Pointer postion x: " + this.game.input.activePointer.x + "  y: " + this.game.input.activePointer.y, 10, 82);
   },
 
   finishGame: function() {

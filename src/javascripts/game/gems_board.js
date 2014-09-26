@@ -30,6 +30,7 @@ Game.GemsBoard.prototype.populate = function() {
 
 Game.GemsBoard.prototype.selectGem = function(gem) {
   this.selectedGem = gem;
+  this.selectedGem.angle = 10;
 }
 
 Game.GemsBoard.prototype.isGemSelected = function() {
@@ -46,6 +47,13 @@ Game.GemsBoard.prototype.getGemByPos = function(x, y) {
   var gemId = x + 'x' + y;
 
   return this.iterate('id', gemId, Phaser.Group.RETURN_CHILD);
+}
+
+Game.GemsBoard.prototype.clearSelectedGem = function() {
+  if(this.selectedGem) {
+    this.selectedGem.angle = 0;
+  }
+  this.selectedGem = undefined;
 }
 
 Game.GemsBoard.prototype.swipe = function(cursorX, cursorY) {
