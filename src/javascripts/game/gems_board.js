@@ -76,7 +76,7 @@ Game.GemsBoard.prototype.swipe = function(cursorX, cursorY) {
       gemToSwipe    = this.getGemByPos(cursorGemPosX, cursorGemPosY),
       gemsToCheck   = [this.selectedGem, gemToSwipe];
 
-  if(this.gemsSwipe.proceed(this, gemToSwipe)) {
+  if(!this.swiping && this.gemsSwipe.proceed(this, gemToSwipe)) {
     this.swiping = true;
     if(this.gemsMatches.findAndMarkToCrush(gemsToCheck)) {
       this.crushGems();
