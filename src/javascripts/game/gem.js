@@ -5,7 +5,6 @@ Game.Gem = function(game, x, y, key, frame) {
   this.scale.y = 1.5;
   this.inputEnabled = true;
   this.refresh();
-  this.markedToCrush = false;
 }
 
 Game.Gem.prototype = Object.create(Phaser.Sprite.prototype);
@@ -21,12 +20,3 @@ Game.Gem.prototype.changePosition = function(x, y) {
   this.refresh();
 }
 
-Game.Gem.prototype.markToCrush = function() {
-  this.markedToCrush = true;
-}
-
-Game.Gem.prototype.crush = function() {
-  if(this.markedToCrush) {
-    this.destroy();
-  }
-}

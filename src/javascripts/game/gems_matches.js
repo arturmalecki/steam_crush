@@ -1,70 +1,76 @@
 Game.GemsMatches = function(board) {
   this.board = board;
-  this.boardCols = board.cols;
-  this.boardRows = board.rows;
-  this.gemSize = board.gemSize;
-  this.gemsFoundToCrush = false;
 }
 
-Game.GemsMatches.prototype.findAndMarkToCrush = function(gems) {
-  var i, gem, x, y;
+Game.GemsMatches.prototype.seekAndCrush = function() {
+  var x, y, gem;
 
-  this.gemsFoundToCrush = false;
-
-  for(i = 0; i < gems.length; i++) {
-    this.findAndMarkToCrushInDirection(gems[i], 'horizontal');
-    this.findAndMarkToCrushInDirection(gems[i], 'vertical');
-  }
-
-  return this.gemsFoundToCrush;
-}
-
-Game.GemsMatches.prototype.findAndMarkToCrushInDirection = function(gem, direction) {
-  var gemToCheck, i, colsOrRows;
-
-  if(direction === 'horizontal') {
-    colsOrRows = this.board.cols;
-  } else if(direction === 'vertical') {
-    colsOrRows = this.board.rows;
-  }
-
-  for(i = 0; i < colsOrRows; i++) {
-    if(direction === 'horizontal') {
-      gemToCheck = this.board.getGemByPos(i * this.gemSize, gem.y);
-    } else if(direction === 'vertical') {
-      gemToCheck = this.board.getGemByPos(gem.x, i * this.gemSize);
+  for(x = 0; x < this.board.cols; x++) {
+    for(y = 0; y < this.board.rows; y++) {
+      this.findMatchesFor(this.board.getGemFrame(x, y), x, y);
     }
-    this._findAndMarkToCrushInDirection(gemToCheck, gem.frame, direction, 0);
+  }
+
+  return this.destroyKilledGems();
+}
+
+Game.GemsMatches.prototype.findMatchesFor = function(gemFrame, gemX, gemY) {
+  var countUp = this.countSameGems(gemFrame, gemX, gemY, 0, -1),
+      countDown = this.countSameGems(gemFrame, gemX, gemY, 0, 1),
+      countLeft = this.countSameGems(gemFrame, gemX, gemY, -1, 0),
+      countRight = this.countSameGems(gemFrame, gemX, gemY, 1, 0),
+      countHorizontal = countLeft + 1 + countRight,
+      countVertical = countUp + 1 + countDown;
+
+
+  if(countHorizontal >= 3) {
+    this.killGemsRange(gemX - countLeft, gemY, gemX + countRight, gemY);
+  }
+
+  if(countVertical >= 3) {
+    this.killGemsRange(gemX, gemY - countUp, gemX, gemY + countDown);
   }
 }
 
-Game.GemsMatches.prototype._findAndMarkToCrushInDirection = function(gem, frame, direction, count) {
-  var nextGem,
-      nextGemX,
-      nextGemY,
-      accumulateCount;
+Game.GemsMatches.prototype.countSameGems = function(gemFrame, gemX, gemY, moveX, moveY) {
+  var x = gemX + moveX,
+      y = gemY + moveY,
+      count = 0;
 
-  if(!gem) { return count; }
-  if(gem.frame !== frame) { return count; }
-
-  nextGemX = gem.x;
-  nextGemY = gem.y;
-
-  if(direction === 'horizontal') {
-    nextGemX += this.gemSize;
-  } else if(direction === 'vertical') {
-    nextGemY += this.gemSize;
+  while(x < this.board.cols && x >= 0 && y < this.board.rows && y >= 0 && this.board.getGemFrame(x, y) === gemFrame) {
+    count += 1;
+    x += moveX;
+    y += moveY;
   }
-
-  nextGem = this.board.getGemByPos(nextGemX, nextGemY);
-
-  accumulateCount = this._findAndMarkToCrushInDirection(nextGem, frame, direction, count + 1);
   
-  if(accumulateCount >= 3) {
-    this.gemsFoundToCrush = true;
-    gem.markToCrush();
+  return count;
+}
+
+Game.GemsMatches.prototype.killGemsRange = function(x1, y1, x2, y2) {
+  var x, y, gem;
+  for(x = x1; x <= x2; x++) {
+    for(y = y1; y <= y2; y++) {
+      gem = this.board.getGem(x, y);
+      if(gem) {
+        gem.kill();
+      }
+    }
+  }
+}
+
+Game.GemsMatches.prototype.destroyKilledGems = function() {
+  var x, y, gem, destroyed = false;
+
+  for(x = 0; x < this.board.cols; x++) {
+    for(y = 0; y < this.board.rows; y++) {
+      gem = this.board.getGem(x, y);
+      if(gem && !gem.alive) {
+        gem.destroy();
+        destroyed = true;
+      }
+    }
   }
 
-  return accumulateCount;
+  return destroyed;
 }
 

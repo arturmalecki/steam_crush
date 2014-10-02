@@ -58,6 +58,16 @@ Game.GemsBoard.prototype.getGem = function(x, y) {
   return this.getGemByPos(x * this.gemSize, y * this.gemSize)
 }
 
+Game.GemsBoard.prototype.getGemFrame = function(x, y) {
+  var gem = this.getGem(x, y);
+
+  if(gem) {
+    return gem.frame;
+  } else {
+    return undefined;
+  }
+}
+
 Game.GemsBoard.prototype.isEptyField = function(x, y) {
   return !this.getGem(x, y);
 }
@@ -87,28 +97,14 @@ Game.GemsBoard.prototype.swipe = function(cursorX, cursorY) {
 
   if(!this.swiping && this.gemsSwipe.proceed(this, gemToSwipe)) {
     this.swiping = true;
-    if(this.gemsMatches.findAndMarkToCrush(gemsToCheck)) {
-      this.crushGems();
+    if(this.gemsMatches.seekAndCrush()) {
       //this.refillBoard();
-      this.gemsDrop.run();
+      //this.gemsDrop.run();
       this.finishSwipe();
     } else {
       this.game.time.events.add(300, this.revertSwipe , this);
     }
   } 
-}
-
-Game.GemsBoard.prototype.crushGems = function() {
-  var x, y, gem;
-
-  for(x = 0; x < this.cols; x++) {
-    for(y = 0; y < this.rows; y++) {
-      gem = this.getGemByPos(x * this.gemSize, y * this.gemSize);
-      if(gem) {
-        gem.crush();
-      }
-    }
-  }
 }
 
 Game.GemsBoard.prototype.refillBoard = function() {
