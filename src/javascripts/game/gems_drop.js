@@ -41,7 +41,7 @@ Game.GemsDrop.prototype.countEmptyFields = function(x, y) {
       nextY = y + 1;
 
   this.lockField(x, y);
-  while(this.board.isEptyField(x, nextY)) {
+  while(nextY < this.board.rows && this.board.isEptyField(x, nextY)) {
     this.lockField(x, nextY);
     emptySpaceCount += 1;
     nextY += 1;
@@ -53,14 +53,14 @@ Game.GemsDrop.prototype.dropGems = function(x, y, size) {
   var prevGem, 
       prevGemY = y - 1,
       height = size * this.board.gemSize;
-
+  
   if(y > 0) {
     while(prevGemY >= 0) {
       prevGem = this.board.getGem(x, prevGemY);
       if(prevGem) {
         prevGem.changePosition(prevGem.x, prevGem.y + height);
-        prevGemY -= 1;
       }
+      prevGemY -= 1;
     }
   }
 }

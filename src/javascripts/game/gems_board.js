@@ -99,7 +99,7 @@ Game.GemsBoard.prototype.swipe = function(cursorX, cursorY) {
     this.swiping = true;
     if(this.gemsMatches.seekAndCrush()) {
       //this.refillBoard();
-      //this.gemsDrop.run();
+      this.gemsDrop.run();
       this.finishSwipe();
     } else {
       this.game.time.events.add(300, this.revertSwipe , this);
