@@ -58,6 +58,7 @@ Game.GemsDrop.prototype.dropGems = function(x, y, size) {
     while(prevGemY >= 0) {
       prevGem = this.board.getGem(x, prevGemY);
       if(prevGem) {
+        this.board.game.add.tween(prevGem).to({y: prevGem.y + height}, 600, Phaser.Easing.Bounce.Out, true)
         prevGem.changePosition(prevGem.x, prevGem.y + height);
       }
       prevGemY -= 1;

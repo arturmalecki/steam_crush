@@ -20,15 +20,19 @@ Game.GemsBoard.prototype = Object.create(Phaser.Group.prototype);
 Game.GemsBoard.prototype.constructor = Game.GemsBoard;
 
 Game.GemsBoard.prototype.populate = function() {
-  var gem, i, j;
+  var gem, i, j, randomGem, debugBoard = [];
 
   for(i = 0; i < this.cols; i++) {
+    debugBoard.push([])
     for(j = 0; j < this.rows; j++) {
-      gem = new Game.Gem(this.game, this.gemSize * i, this.gemSize * j, 'tiles', Math.floor((Math.random() * 5) + 1))
-      gem.events.onInputDown.add(this.selectGem, this)
+      randomGem = Math.floor((Math.random() * 5) + 1);
+      debugBoard[i].push(randomGem);
+      gem = new Game.Gem(this.game, this.gemSize * i, this.gemSize * j, 'tiles', randomGem);
+      gem.events.onInputDown.add(this.selectGem, this);
       this.add(gem);
     }
   }
+  console.log(debugBoard.toString().split(','));
 }
 
 Game.GemsBoard.prototype.selectGem = function(gem) {
