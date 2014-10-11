@@ -1,5 +1,6 @@
 Game.GemsMatches = function(board) {
   this.board = board;
+  this.gemsDrop = new Game.GemsDrop(this.board);
 }
 
 Game.GemsMatches.prototype.seekAndCrush = function() {
@@ -11,7 +12,12 @@ Game.GemsMatches.prototype.seekAndCrush = function() {
     }
   }
 
-  return this.destroyKilledGems();
+  if(this.destroyKilledGems()) {
+    this.board.game.time.events.add(100, this.gemsDrop.run , this.gemsDrop);
+    return true;
+  } else {
+    return false;
+  }
 }
 
 Game.GemsMatches.prototype.findMatchesFor = function(gemFrame, gemX, gemY) {

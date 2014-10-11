@@ -18,11 +18,9 @@ Game.Game = {
     if(!Game.G.paused) {
       this.gameTopBar.updateScoreText(this.score);
 
+      this.gemsBorad.swipe(this.game.input.activePointer.x, this.game.input.activePointer.y);
       if(this.game.input.activePointer.justReleased()) {
-        this.gemsBorad.swipe(this.game.input.activePointer.x, this.game.input.activePointer.y);
         this.gemsBorad.clearSelectedGem();
-      } else {
-        this.gemsBorad.swipe(this.game.input.activePointer.x, this.game.input.activePointer.y);
       }
     }
   },

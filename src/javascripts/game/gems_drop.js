@@ -1,6 +1,7 @@
 Game.GemsDrop = function(board) {
   this.board = board;
   this.lockedFields = {};
+  this.dropGemsCount = 0;
 }
 
 Game.GemsDrop.prototype.clearLockedField = function() {
@@ -58,10 +59,23 @@ Game.GemsDrop.prototype.dropGems = function(x, y, size) {
     while(prevGemY >= 0) {
       prevGem = this.board.getGem(x, prevGemY);
       if(prevGem) {
-        this.board.game.add.tween(prevGem).to({y: prevGem.y + height}, 600, Phaser.Easing.Bounce.Out, true)
+        this.dropGemsCount += 1;
+        this.board.game.add.tween(prevGem).to({y: prevGem.y + height}, 600, Phaser.Easing.Bounce.Out, true).
+          onComplete.add(this.dropingDone, this);
         prevGem.changePosition(prevGem.x, prevGem.y + height);
       }
       prevGemY -= 1;
+    }
+  }
+}
+
+Game.GemsDrop.prototype.dropingDone = function() {
+  this.dropGemsCount -= 1;
+
+  if(this.dropGemsCount <= 0) {
+    this.dropGemsCount = 0;
+    if(!this.board.gemsMatches.seekAndCrush()) {
+      this.board.allowSwiping();
     }
   }
 }

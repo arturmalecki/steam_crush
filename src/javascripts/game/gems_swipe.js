@@ -1,22 +1,21 @@
-Game.GemsSwipe = function() {
-  this.selectedGem = undefined;
-  this.board       = undefined;
-  this.gemToSwipe  = undefined;
-  this.gemsHistory = undefined;
+Game.GemsSwipe = function(board) {
+  this.board          = board;
+  this.gemToSwipe     = undefined;
+  this.selectedGem    = undefined;
+  this.gemsHistory    = undefined;
+  this.swipeDoneCount = 0;
 }
 
-Game.GemsSwipe.prototype.proceed = function(board, gemToSwipe) {
-  this.selectedGem = board.selectedGem;
-  this.board       = board;
+Game.GemsSwipe.prototype.proceed = function(gemToSwipe) {
+  this.selectedGem = this.board.selectedGem;
   this.gemToSwipe  = gemToSwipe;
 
   if(this.board.isGemSelected() && this.gemToSwipe) {
     if(this.isSwipePossible()) {
+      this.board.swipingBlocked = true;
       this.swipe();
-      return true;
     }
   }
-  return false;
 }
 
 Game.GemsSwipe.prototype.isSwipePossible = function() {
@@ -50,7 +49,12 @@ Game.GemsSwipe.prototype.isCursorIsOnValidPosition = function() {
 }
 
 Game.GemsSwipe.prototype.revert = function() {
-  this.gemsHistory.revert();
+  this.board.game.add.tween(this.gemsHistory.gem1).
+    to({x: this.gemsHistory.gem1X, y: this.gemsHistory.gem1Y}, 200, Phaser.Easing.Linear.None, true).
+    onComplete.add(this.swipingRevertingDone, this);
+  this.board.game.add.tween(this.gemsHistory.gem2).
+    to({x: this.gemsHistory.gem2X, y: this.gemsHistory.gem2Y}, 200, Phaser.Easing.Linear.None, true).
+    onComplete.add(this.swipingRevertingDone, this);
 }
 
 Game.GemsSwipe.prototype.swipe = function() {
@@ -58,7 +62,30 @@ Game.GemsSwipe.prototype.swipe = function() {
       tmpY        = this.selectedGem.y;
 
   this.gemsHistory = new Game.GemsHistory(this.selectedGem, this.gemToSwipe);
-  this.selectedGem.changePosition(this.gemToSwipe.x, this.gemToSwipe.y);
-  this.gemToSwipe.changePosition(tmpX, tmpY);
+  this.board.game.add.tween(this.selectedGem).
+    to({x: this.gemToSwipe.x, y: this.gemToSwipe.y}, 200, Phaser.Easing.Linear.None, true).
+    onComplete.add(this.swipingDone, this);
+  this.board.game.add.tween(this.gemToSwipe).
+    to({x: tmpX, y: tmpY}, 200, Phaser.Easing.Linear.None, true).
+    onComplete.add(this.swipingDone, this);
 }
 
+Game.GemsSwipe.prototype.swipingDone = function(gem) { 
+  gem.refresh();
+  this.swipeDoneCount += 1;
+  if(this.swipeDoneCount >= 2) {
+    this.swipeDoneCount = 0;
+    if(!this.board.gemsMatches.seekAndCrush()) {
+      this.revert();
+    }
+  }
+};
+
+Game.GemsSwipe.prototype.swipingRevertingDone = function(gem) { 
+  gem.refresh();
+  this.swipeDoneCount += 1;
+  if(this.swipeDoneCount >= 2) {
+    this.swipeDoneCount = 0;
+    this.board.allowSwiping();
+  }
+};
