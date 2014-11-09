@@ -1,22 +1,23 @@
 Game.GemsMatches = function(board) {
   this.board = board;
-  this.gemsDrop = new Game.GemsDrop(this.board);
+  this.gemsToKill = 0;
+  this.matches = [];
 }
 
-Game.GemsMatches.prototype.seekAndCrush = function() {
+Game.GemsMatches.prototype.hasMatches = function() {
+  this.run();
+  return this.matches.length > 0;
+}
+
+Game.GemsMatches.prototype.run = function() {
   var x, y, gem;
+
+  this.matches = [];
 
   for(x = 0; x < this.board.cols; x++) {
     for(y = 0; y < this.board.rows; y++) {
       this.findMatchesFor(this.board.getGemFrame(x, y), x, y);
     }
-  }
-
-  if(this.destroyKilledGems()) {
-    this.board.game.time.events.add(100, this.gemsDrop.run , this.gemsDrop);
-    return true;
-  } else {
-    return false;
   }
 }
 
@@ -30,11 +31,11 @@ Game.GemsMatches.prototype.findMatchesFor = function(gemFrame, gemX, gemY) {
 
 
   if(countHorizontal >= 3) {
-    this.killGemsRange(gemX - countLeft, gemY, gemX + countRight, gemY);
+    this.addRangeMatches(gemX - countLeft, gemY, gemX + countRight, gemY);
   }
 
   if(countVertical >= 3) {
-    this.killGemsRange(gemX, gemY - countUp, gemX, gemY + countDown);
+    this.addRangeMatches(gemX, gemY - countUp, gemX, gemY + countDown);
   }
 }
 
@@ -43,7 +44,7 @@ Game.GemsMatches.prototype.countSameGems = function(gemFrame, gemX, gemY, moveX,
       y = gemY + moveY,
       count = 0;
 
-  while(x < this.board.cols && x >= 0 && y < this.board.rows && y >= 0 && this.board.getGemFrame(x, y) === gemFrame) {
+  while(gemFrame && x < this.board.cols && x >= 0 && y < this.board.rows && y >= 0 && this.board.getGemFrame(x, y) === gemFrame) {
     count += 1;
     x += moveX;
     y += moveY;
@@ -52,31 +53,15 @@ Game.GemsMatches.prototype.countSameGems = function(gemFrame, gemX, gemY, moveX,
   return count;
 }
 
-Game.GemsMatches.prototype.killGemsRange = function(x1, y1, x2, y2) {
-  var x, y, gem;
+Game.GemsMatches.prototype.addRangeMatches = function(x1, y1, x2, y2) {
+var x, y, gem, self = this;
   for(x = x1; x <= x2; x++) {
     for(y = y1; y <= y2; y++) {
       gem = this.board.getGem(x, y);
-      if(gem) {
-        gem.kill();
+      if(gem && this.matches.filter(function(g) { return g.id === gem.id }).length === 0) {
+        this.matches.push(gem);
       }
     }
   }
-}
-
-Game.GemsMatches.prototype.destroyKilledGems = function() {
-  var x, y, gem, destroyed = false;
-
-  for(x = 0; x < this.board.cols; x++) {
-    for(y = 0; y < this.board.rows; y++) {
-      gem = this.board.getGem(x, y);
-      if(gem && !gem.alive) {
-        gem.destroy();
-        destroyed = true;
-      }
-    }
-  }
-
-  return destroyed;
 }
 

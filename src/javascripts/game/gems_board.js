@@ -1,17 +1,16 @@
 Game.GemsBoard = function(game, cols, rows, gemSize) {
   Phaser.Group.call(this, game);
 
-  this.game           = game;
-  this.cols           = cols;
-  this.rows           = rows;
-  this.gemSize        = gemSize;
-  this.x              = (game.width / 2) - (this.cols * gemSize / 2);
-  this.y              = (game.height / 2) - (this.rows * gemSize / 2);
-  this.selectedGem    = undefined;
-  this.gemsMatches    = new Game.GemsMatches(this);
-  this.gemsSwipe      = new Game.GemsSwipe(this);
-  this.gemsDrop       = new Game.GemsDrop(this);
-  this.swipingBlocked = false;
+  this.game            = game;
+  this.cols            = cols;
+  this.rows            = rows;
+  this.gemSize         = gemSize;
+  this.x               = (game.width / 2) - (this.cols * gemSize / 2);
+  this.y               = (game.height / 2) - (this.rows * gemSize / 2);
+  this.selectedGem     = undefined;
+  this.gemsSwipe       = new Game.GemsSwipe(this);
+  this.gemsDrop        = new Game.GemsDrop(this);
+  this.gemsCrusher     = new Game.GemsCrusher(this);
 
   this.populate();
 }
@@ -25,18 +24,36 @@ Game.GemsBoard.prototype.populate = function() {
   for(i = 0; i < this.cols; i++) {
     debugBoard.push([]);
     for(j = 0; j < this.rows; j++) {
-      randomGem = Math.floor((Math.random() * 3) + 1);
+      randomGem = Math.floor((Math.random() * 5) + 1);
       debugBoard[i].push(randomGem);
       gem = new Game.Gem(this.game, this.gemSize * i, this.gemSize * j, 'tiles', randomGem);
       gem.events.onInputDown.add(this.selectGem, this);
       this.add(gem);
     }
   }
-  console.log(debugBoard.toString().split(','));
+}
+
+Game.GemsBoard.prototype.update = function() {
+  if(!this.isSwapping() && this.selectGem){
+    this.gemsSwipe.run();
+    this.gemsCrusher.run();
+    //this.gemsRefilBoard.run();
+  }
+
+  if(this.game.input.activePointer.justReleased()) {
+    this.clearSelectedGem();
+  }
+}
+
+Game.GemsBoard.prototype.isSwapping = function() {
+  return this.children.filter(function(gem) {
+    return gem.swapping;
+  }).length > 0;
 }
 
 Game.GemsBoard.prototype.selectGem = function(gem) {
-  if(!this.swipingBlocked) {
+  console.log(this.selectedGem);
+  if(!this.isSwapping() && !this.selectedGem) {
     this.selectedGem = gem;
     this.selectedGem.angle = 10;
   }
@@ -83,31 +100,6 @@ Game.GemsBoard.prototype.clearSelectedGem = function() {
   this.selectedGem = undefined;
 }
 
-Game.GemsBoard.prototype.swipe = function(cursorX, cursorY) {
-  var cursorGemPosX = this.convertToGemPosition(cursorX, 'x'),
-      cursorGemPosY = this.convertToGemPosition(cursorY, 'y'),
-      gemToSwipe    = this.getGemByPos(cursorGemPosX, cursorGemPosY),
-      gemsToCheck   = [this.selectedGem, gemToSwipe];
-
-  if(!this.swipingBlocked) {
-    this.gemsSwipe.proceed(gemToSwipe);
-  }
-
-  //if(this.gemsSwipe.isDone()) {
-  //  this.gemsMatches.seekAndCrush();
-  //}
-
-  //if(this.gemsSwipe.proceed(this, gemToSwipe)) {
-    //if(this.gemsMatches.seekAndCrush()) {
-      //this.refillBoard();
-      //this.gemsDrop.run();
-      //this.finishSwipe();
-    //} else {
-      //this.game.time.events.add(300, this.revertSwipe , this);
-    //}
-  //} 
-}
-
 Game.GemsBoard.prototype.refillBoard = function() {
   var x, y, gem, gemX, gemY;
 
@@ -129,6 +121,5 @@ Game.GemsBoard.prototype.refillBoard = function() {
 }
 
 Game.GemsBoard.prototype.allowSwiping = function() {
-  this.swipingBlocked = false;  
   this.clearSelectedGem();
 }

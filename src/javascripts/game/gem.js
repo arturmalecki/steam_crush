@@ -4,6 +4,7 @@ Game.Gem = function(game, x, y, key, frame) {
   this.scale.x = 1.5;
   this.scale.y = 1.5;
   this.inputEnabled = true;
+  this.swapping = false
   this.refresh();
 }
 
