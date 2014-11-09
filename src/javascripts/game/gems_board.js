@@ -34,6 +34,17 @@ Game.GemsBoard.prototype.populate = function() {
 }
 
 Game.GemsBoard.prototype.update = function() {
+  var x, y, gem;
+
+  for(x = 0; x < this.cols; x++) {
+    for(y = 0; y < this.rows; y++) {
+      gem = this.getGem(x, y);
+      if(gem && !gem.alive) {
+        gem.destroy();
+      }
+    }
+  };
+
   if(!this.isSwapping() && this.selectGem){
     this.gemsSwipe.run();
     this.gemsCrusher.run();
@@ -52,7 +63,6 @@ Game.GemsBoard.prototype.isSwapping = function() {
 }
 
 Game.GemsBoard.prototype.selectGem = function(gem) {
-  console.log(this.selectedGem);
   if(!this.isSwapping() && !this.selectedGem) {
     this.selectedGem = gem;
     this.selectedGem.angle = 10;
