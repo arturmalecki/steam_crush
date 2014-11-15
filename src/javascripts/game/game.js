@@ -8,7 +8,7 @@ Game.Game = {
     Game.Views.background(this.game);
     this.time.events.loop(Phaser.Timer.SECOND, this.updateTimeText, this);
 
-    this.gameTopBar = new Game.Views.GameTopBar(this.game, this);
+    //this.gameTopBar = new Game.Views.GameTopBar(this.game, this);
     this.gemsBoard = new Game.GemsBoard(this.game, cols, rows, Game.G.gemSizeWithSpacing);
 
     Game.Views.footerInfo(this.game, {version: Game.version});
@@ -16,7 +16,7 @@ Game.Game = {
 
   update: function() {
     if(!Game.G.paused) {
-      this.gameTopBar.updateScoreText(this.score);
+      //this.gameTopBar.updateScoreText(this.score);
       this.gemsBoard.update();
     }
   },
@@ -31,7 +31,7 @@ Game.Game = {
   
   updateTimeText: function() {
     this.timeCounter++;
-    this.gameTopBar.updateTimeText(this.timeCounter)
+    //this.gameTopBar.updateTimeText(this.timeCounter)
   },
 
   finishGame: function() {
