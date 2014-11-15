@@ -18,6 +18,6 @@ var Game = {
     },
     Views: {},
     Animations: {},
-    version: '0.0.10',
-    parentId: 'zmobi-crush-container'
+    version: '0.1.0',
+    parentId: 'steam-crush-container'
 };
