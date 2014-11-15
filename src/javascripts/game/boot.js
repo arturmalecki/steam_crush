@@ -8,7 +8,7 @@ Game.Boot = {
     //this.scale.minHeight = 260;
     //this.scale.maxWidth = 1024;
     //this.scale.maxHeight = 768;
-    this.scale.pageAlignHorizontally = true;
+    //this.scale.pageAlignHorizontally = true;
     //this.scale.pageAlignVertically = true;
     this.scale.setScreenSize(true);
 
