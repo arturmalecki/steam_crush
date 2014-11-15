@@ -34,14 +34,6 @@ Game.Game = {
     this.gameTopBar.updateTimeText(this.timeCounter)
   },
 
-  render: function() {
-    this.game.debug.text("Gem selected: " + !!this.gemsBoard.selectedGem, 10, 70);
-    if(this.gemsBoard.selectedGem) {
-      this.game.debug.text("x: " + this.gemsBoard.selectedGem.x + "  y: " + this.gemsBoard.selectedGem.y, 200, 70);
-    }
-    this.game.debug.text("Pointer postion x: " + this.game.input.activePointer.x + "  y: " + this.game.input.activePointer.y, 10, 82);
-  },
-
   finishGame: function() {
     Game.paused = false;
     this.timeCounter = 0;

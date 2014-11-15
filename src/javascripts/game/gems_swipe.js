@@ -32,12 +32,18 @@ Game.GemsSwipe.prototype.run = function() {
 Game.GemsSwipe.prototype.isSwipePossible = function() {
   if (this.isCursorOnSelectedGem()) {
     return false;
+  } else if(!this.areGemsInProperState()) {
+    return false;
   } else if(this.isCursorOutsideBoard()) {
     return false;
   } else if(!this.isCursorIsOnValidPosition()) {
     return false;
   }
   return true;
+}
+
+Game.GemsSwipe.prototype.areGemsInProperState = function() {
+  return !this.gem2.destroying && !this.gem1.destroying;
 }
 
 Game.GemsSwipe.prototype.isCursorOnSelectedGem = function() {

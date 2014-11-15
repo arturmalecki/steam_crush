@@ -13,6 +13,7 @@ Game.GemsCrusher.prototype = {
  
     gems.forEach(function(gem) {
       gem.loadTexture('explosion', 0);
+      gem.destroying = true;
       gem.animations.add('explosion');
       gem.animations.play('explosion', 30, false, true);
     });

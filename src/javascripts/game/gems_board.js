@@ -19,13 +19,11 @@ Game.GemsBoard.prototype = Object.create(Phaser.Group.prototype);
 Game.GemsBoard.prototype.constructor = Game.GemsBoard;
 
 Game.GemsBoard.prototype.populate = function() {
-  var gem, i, j, randomGem, debugBoard = [];
+  var gem, i, j, randomGem;
 
   for(i = 0; i < this.cols; i++) {
-    debugBoard.push([]);
     for(j = 0; j < this.rows; j++) {
       randomGem = Math.floor((Math.random() * 5) + 1);
-      debugBoard[i].push(randomGem);
       gem = new Game.Gem(this.game, this.gemSize * i, this.gemSize * j, 'tiles', randomGem);
       gem.events.onInputDown.add(this.selectGem, this);
       this.add(gem);
@@ -45,9 +43,14 @@ Game.GemsBoard.prototype.update = function() {
     }
   };
 
-  if(!this.isSwapping() && this.selectGem){
-    this.gemsSwipe.run();
+  if(!this.isSwapping()){
+    if(this.selectGem) {
+      this.gemsSwipe.run();
+    }
     this.gemsCrusher.run();
+  }
+  if(!this.isSwapping() && !this.isDropping()){
+    this.gemsDrop.run();
     //this.gemsRefilBoard.run();
   }
 
@@ -59,6 +62,12 @@ Game.GemsBoard.prototype.update = function() {
 Game.GemsBoard.prototype.isSwapping = function() {
   return this.children.filter(function(gem) {
     return gem.swapping;
+  }).length > 0;
+}
+
+Game.GemsBoard.prototype.isDropping = function() {
+  return this.children.filter(function(gem) {
+    return gem.dropping;
   }).length > 0;
 }
 
@@ -110,26 +119,3 @@ Game.GemsBoard.prototype.clearSelectedGem = function() {
   this.selectedGem = undefined;
 }
 
-Game.GemsBoard.prototype.refillBoard = function() {
-  var x, y, gem, gemX, gemY;
-
-  for(x = 0; x < this.cols; x++) {
-    for(y = 0; y < this.rows; y++) {
-      gem = this.getGemByPos(x * this.gemSize, y * this.gemSize);
-      if(!gem) {
-        gemX = x;
-        gemY = -1;
-        while(this.getGemByPos(gemX * this.gemSize, gemY * this.gemSize)) {
-          gemY -= 1;
-        }
-        gem = new Game.Gem(this.game, gemX * this.gemSize, gemY * this.gemSize, 'tiles', Math.floor((Math.random() * 10) + 1))
-        gem.events.onInputDown.add(this.selectGem, this)
-        this.add(gem);
-      }
-    }
-  }
-}
-
-Game.GemsBoard.prototype.allowSwiping = function() {
-  this.clearSelectedGem();
-}
