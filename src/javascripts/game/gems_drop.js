@@ -28,7 +28,7 @@ Game.GemsDrop.prototype.findToDrop = function(currentX, currentY, yMax) {
   var distance = -1, 
       gem, y;
 
-  while(distance > -yMax) {
+  while(true) {
     y = currentY + distance;
     gem = this.board.getGem(currentX, y);
     if(gem && !gem.dropping) {
@@ -36,7 +36,6 @@ Game.GemsDrop.prototype.findToDrop = function(currentX, currentY, yMax) {
     }
     distance -= 1;
   }
-  return false;
 };
 
 Game.GemsDrop.prototype.refillBoard = function() {
@@ -56,19 +55,6 @@ Game.GemsDrop.prototype.refillBoard = function() {
       this.board.add(gem);
     }
   }, this);
-}
-
-Game.GemsDrop.prototype.countEmptyFields = function(x, y) {
-  var emptySpaceCount = 0,
-      nextY = y + 1;
-
-  while(nextY < this.board.rows) {
-    if(this.board.isEptyField(x, nextY)) {
-      emptySpaceCount += 1;
-    }
-    nextY += 1;
-  }
-  return emptySpaceCount;
 }
 
 Game.GemsDrop.prototype.dropGem = function(gem, dropToY) {
