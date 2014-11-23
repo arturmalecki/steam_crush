@@ -18,17 +18,28 @@ Game.GemsBoard = function(game, cols, rows, gemSize) {
 Game.GemsBoard.prototype = Object.create(Phaser.Group.prototype);
 Game.GemsBoard.prototype.constructor = Game.GemsBoard;
 
-Game.GemsBoard.prototype.populate = function() {
-  var gem, i, j, randomGem;
-
-  for(i = 0; i < this.cols; i++) {
-    for(j = 0; j < this.rows; j++) {
-      randomGem = Math.floor((Math.random() * 5) + 1);
-      gem = new Game.Gem(this.game, this.gemSize * i, this.gemSize * j, 'tiles', randomGem);
-      gem.events.onInputDown.add(this.selectGem, this);
-      this.add(gem);
+Game.GemsBoard.prototype.eachGem = function(func, context) {
+  var level = Game.Levels[Game.User.level],
+      x, y;
+  for(y = 0; y < level.ySize; y++) {
+    for(x = 0; x < level.xSize; x++) {
+      if(level.board[y][x] === 1) {
+        func.call(context, x, y);
+      }
     }
   }
+}
+
+
+Game.GemsBoard.prototype.populate = function() {
+  var gem, randomGem;
+
+  this.eachGem(function(x, y) {
+    randomGem = Math.floor((Math.random() * 5) + 1);
+    gem = new Game.Gem(this.game, this.gemSize * x, this.gemSize * y, 'tiles', randomGem);
+    gem.events.onInputDown.add(this.selectGem, this);
+    this.add(gem);
+  }, this);
 }
 
 Game.GemsBoard.prototype.update = function() {
@@ -51,7 +62,6 @@ Game.GemsBoard.prototype.update = function() {
   }
   if(!this.isSwapping() && !this.isDropping()){
     this.gemsDrop.run();
-    //this.gemsRefilBoard.run();
   }
 
   if(this.game.input.activePointer.justReleased()) {
