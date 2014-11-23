@@ -17,11 +17,5 @@
 //= require ./game/board
 //= require ./game/board_pictures
 //= require ./game/logic
-//= require ./game/boot
-//= require ./game/preloader
-//= require ./game/game
-//= require ./game/main_menu
-//= require ./game/select_level
-//= require ./game/credits
-//= require ./game/end_game
+//= require_tree ./game/stages
 //= require ./game/main
