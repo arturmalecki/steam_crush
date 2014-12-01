@@ -35,7 +35,7 @@ Game.GemsBoard.prototype.populate = function() {
   var gem, randomGem;
 
   this.eachGem(function(x, y) {
-    randomGem = Math.floor((Math.random() * 5) + 1);
+    randomGem = Math.floor((Math.random() * Game.Levels[Game.User.level].numberOfTiles) + 1);
     gem = new Game.Gem(this.game, this.gemSize * x, this.gemSize * y, 'tiles', randomGem);
     gem.events.onInputDown.add(this.selectGem, this);
     this.add(gem);
