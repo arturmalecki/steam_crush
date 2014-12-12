@@ -2,6 +2,7 @@
 //= require_self
 //= require_tree ./lib
 //= require_tree ./animations
+//= require ./game/levels
 //= require ./game/views/background
 //= require ./game/views/footer_info
 //= require ./game/views/game_top_bar
