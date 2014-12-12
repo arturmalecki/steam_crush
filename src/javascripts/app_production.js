@@ -6,6 +6,7 @@
 //= require ./game/views/background
 //= require ./game/views/footer_info
 //= require ./game/views/game_top_bar
+//= require ./game/views/label_button
 //= require ./game/gem
 //= require ./game/gems_history
 //= require ./game/gems_matches
