@@ -18,6 +18,13 @@ var Game = {
   },
   Views: {},
   Animations: {},
-  version: '0.1.0',
-  parentId: 'steam-crush-container'
+  Core: {},
+  version: '0.0.9',
+  parentId: 'steam-crush-container',
+  width: 640,
+  height: 960,
+  maxWidth: 1280,
+  maxHeight: 1920,
+  scaleValue: 1
 };
+

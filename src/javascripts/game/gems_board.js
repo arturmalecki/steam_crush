@@ -5,14 +5,16 @@ Game.GemsBoard = function(game, cols, rows, gemSize) {
   this.cols            = cols;
   this.rows            = rows;
   this.gemSize         = gemSize;
-  this.x               = (game.width / 2) - (this.cols * gemSize / 2);
-  this.y               = (game.height / 2) - (this.rows * gemSize / 2);
   this.selectedGem     = undefined;
   this.gemsSwipe       = new Game.GemsSwipe(this);
   this.gemsDrop        = new Game.GemsDrop(this);
   this.gemsCrusher     = new Game.GemsCrusher(this);
 
   this.populate();
+
+  this.scale = new Phaser.Point(Game.scaleValue, Game.scaleValue);
+  this.x     = (game.width / 2) - (this.width / 2);
+  this.y     = 50; //(game.height / 2) - (this.rows * gemSize / 2);
 }
 
 Game.GemsBoard.prototype = Object.create(Phaser.Group.prototype);
@@ -92,8 +94,16 @@ Game.GemsBoard.prototype.isGemSelected = function() {
   return !!this.selectedGem;
 }
 
+/**
+ * Converts absolute postion to relative one.
+ * Includes position of the board and actual scale value.
+ *
+ * @this {Game.GemsBoard}
+ * @params {number} posiion Position of the cursor
+ * @params {string} cord Base on which coodinate
+ */
 Game.GemsBoard.prototype.convertToGemPosition = function(position, cord) {
-  var p = position - this[cord];
+  var p = (position - this[cord]) / Game.scaleValue;
 
   return Math.floor(p / this.gemSize) * this.gemSize;
 }

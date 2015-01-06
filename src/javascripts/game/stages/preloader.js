@@ -7,6 +7,7 @@ Game.Preloader = {
     this.load.image('topBar', Game.assetsPath + 'top_bar.png');
     this.load.image('pauseMenuBg', Game.assetsPath + 'pause_menu_bg.png');
     this.load.image('background', Game.assetsPath + 'bg.png');
+    this.load.image('groupBg', Game.assetsPath + 'group_bg.jpg');
     this.load.image('selectLevelBg', Game.assetsPath + 'select_level.png');
   },
 
