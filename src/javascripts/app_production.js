@@ -17,9 +17,5 @@
 //= require ./game/gems_board
 //= require ./game/gems_swipe
 //= require ./game/pause_panel
-//= require ./game/tiles_clicks
-//= require ./game/board
-//= require ./game/board_pictures
-//= require ./game/logic
 //= require_tree ./game/stages
 //= require ./game/main
