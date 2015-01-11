@@ -12,6 +12,6 @@ Game.Preloader = {
   },
 
   create: function() {
-    this.state.start('SelectLevel')
+    this.state.start('MainMenu')
   }
 }

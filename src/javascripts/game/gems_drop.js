@@ -7,7 +7,7 @@ Game.GemsDrop.prototype.toFieldLock = function(x, y) {
 }
 
 Game.GemsDrop.prototype.run = function() {
-  var level = Game.Levels[Game.User.level], 
+  var level = this.board.level, 
       x, y, gem, gemToDrop;
 
   this.refillBoard();
@@ -40,7 +40,8 @@ Game.GemsDrop.prototype.findToDrop = function(currentX, currentY, yMax) {
 
 Game.GemsDrop.prototype.refillBoard = function() {
   var x, y, gem, gemX, gemY,
-      gemSize = this.board.gemSize;
+      gemSize = this.board.gemSize,
+      self = this;
 
   this.board.eachGem(function(x, y) {
     gem = this.board.getGem(x, y);
@@ -50,7 +51,7 @@ Game.GemsDrop.prototype.refillBoard = function() {
       while(this.board.getGem(gemX, gemY)) {
         gemY -= 1;
       }
-      gem = new Game.Gem(this.board.game, gemX * gemSize, gemY * gemSize, 'tiles', Math.floor((Math.random() * Game.Levels[Game.User.level].numberOfTiles) + 1))
+      gem = new Game.Gem(this.board.game, gemX * gemSize, gemY * gemSize, 'tiles', Math.floor((Math.random() * self.board.level.numberOfTiles) + 1))
       gem.events.onInputDown.add(this.board.selectGem, this.board)
       this.board.add(gem);
     }

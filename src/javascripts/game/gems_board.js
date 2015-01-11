@@ -9,6 +9,7 @@ Game.GemsBoard = function(game, cols, rows, gemSize) {
   this.gemsSwipe       = new Game.GemsSwipe(this);
   this.gemsDrop        = new Game.GemsDrop(this);
   this.gemsCrusher     = new Game.GemsCrusher(this);
+  this.level           = Game.Levels[Game.User.level][Game.User.sublevel];
 
   this.populate();
 
@@ -21,7 +22,7 @@ Game.GemsBoard.prototype = Object.create(Phaser.Group.prototype);
 Game.GemsBoard.prototype.constructor = Game.GemsBoard;
 
 Game.GemsBoard.prototype.eachGem = function(func, context) {
-  var level = Game.Levels[Game.User.level],
+  var level = this.level,
       x, y;
   for(y = 0; y < level.ySize; y++) {
     for(x = 0; x < level.xSize; x++) {
@@ -34,10 +35,11 @@ Game.GemsBoard.prototype.eachGem = function(func, context) {
 
 
 Game.GemsBoard.prototype.populate = function() {
-  var gem, randomGem;
+  var gem, randomGem,
+      self = this;
 
   this.eachGem(function(x, y) {
-    randomGem = Math.floor((Math.random() * Game.Levels[Game.User.level].numberOfTiles) + 1);
+    randomGem = Math.floor((Math.random() * self.level.numberOfTiles) + 1);
     gem = new Game.Gem(this.game, this.gemSize * x, this.gemSize * y, 'tiles', randomGem);
     gem.events.onInputDown.add(this.selectGem, this);
     this.add(gem);

@@ -1,22 +1,28 @@
 Game.MainMenu = {
   create: function() {
-      var btnX = this.game.world.centerX - 75,
-          menuItemAnimation = new Game.Animations.MenuItem(this.game, Game.Global.menuItemFadeDelay),
-          playBtn, creditsBtn;
+    var group; 
 
-      Game.background(this.game);
-      this.add.sprite(this.game.world.centerX - 88, 25, 'title');
-      this.add.sprite(this.game.world.centerX - 59, 100, 'logo');
-      this.add.sprite(this.game.world.centerX - 129, 250, 'subtitle');
+    Game.Views.default(this.game);
 
-      playBtn = this.add.button(this.game.world.centerX - 72, 320, 'playBtn', Game.Actions.goToSelectLevel, this);
-      menuItemAnimation.add(playBtn);
+    group = this.game.add.group();
+    group.add(
+      new Phaser.TileSprite(this.game, 0, 0, 600, 600, 'groupBg')
+    );
 
-      // creditsBtn = this.add.button(this.game.world.centerX - 40, 380, 'creditsBtn', Game.Actions.goToCredits, this);
-      // menuItemAnimation.add(creditsBtn);
+    group.add(
+      new Phaser.Text(this.game, 50, 25, "Main Menu", {font: '50px Arial', fill: '#ffffff'})
+    );
 
-      Game.addInfo(this.game);
+    group.add(
+      new LabelButton(this.game, 50, 100, 'selectLevelBg', 'Play', this.goToSelectLevel, this)
+    );
+
+    group.scale = new Phaser.Point(Game.scaleValue, Game.scaleValue);
+    group.position = new PIXI.Point((this.game.width / 2) - (group.width / 2) , 50);
   },
   render: function() {},
-  update: function() {}
+  update: function() {},
+  goToSelectLevel: function() {
+    this.state.start('SelectLevel');
+  }
 }

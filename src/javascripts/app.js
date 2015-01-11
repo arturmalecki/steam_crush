@@ -14,7 +14,8 @@ var Game = {
     gemSizeWithSpacing: 77
   },
   User: {
-    level: 1
+    level: 1,
+    sublevel: 1
   },
   Views: {},
   Animations: {},
