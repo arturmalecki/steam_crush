@@ -1,5 +1,8 @@
 Game.Preloader = {
   preload: function() {
+    var loader = this.add.image(this.game.world.centerX - 146, 50, 'loader');
+    this.load.setPreloadSprite(loader);
+
     this.load.spritesheet('playIconBtn', Game.assetsPath + 'play_icon.png', 58, 65.5);
     this.load.spritesheet('pauseIconBtn', Game.assetsPath + 'pause_icon.png', 30, 28);
     this.load.spritesheet('tiles', Game.assetsPath + 'tiles.png', 50, 50);
