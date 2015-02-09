@@ -1,6 +1,6 @@
 //= require ./app
 //= require_self
-//= require_tree ./lib
+//= require ./lib/phaser
 //= require_tree ./animations
 //= require ./game/core
 //= require ./game/levels
