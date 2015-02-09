@@ -10,6 +10,7 @@
 //= require ./game/views/label_button
 //= require ./game/views/default
 //= require ./game/gem
+//= require ./game/points
 //= require ./game/gems_history
 //= require ./game/gems_matches
 //= require ./game/gems_crusher

@@ -1,15 +1,15 @@
-Game.GemsBoard = function(game, cols, rows, gemSize) {
+Game.GemsBoard = function(game, gemSize) {
   Phaser.Group.call(this, game);
 
   this.game            = game;
-  this.cols            = cols;
-  this.rows            = rows;
   this.gemSize         = gemSize;
   this.selectedGem     = undefined;
   this.gemsSwipe       = new Game.GemsSwipe(this);
   this.gemsDrop        = new Game.GemsDrop(this);
   this.gemsCrusher     = new Game.GemsCrusher(this);
   this.level           = Game.Levels[Game.User.level][Game.User.sublevel];
+  this.gemsMatches     = new Game.GemsMatches(this);
+  this.points          = new Game.Points(this);
 
   this.populate();
 
@@ -47,16 +47,18 @@ Game.GemsBoard.prototype.populate = function() {
 }
 
 Game.GemsBoard.prototype.update = function() {
-  var x, y, gem;
+  var level = this.level,
+      x, y, gem;
 
-  for(x = 0; x < this.cols; x++) {
-    for(y = 0; y < this.rows; y++) {
+  for(x = 0; x < level.xSize; x++) {
+    for(y = 0; y < level.ySize; y++) {
       gem = this.getGem(x, y);
       if(gem && !gem.alive) {
         gem.destroy();
       }
     }
   };
+  this.gemsMatches.run();
 
   if(!this.isSwapping()){
     if(this.selectGem) {
@@ -71,6 +73,8 @@ Game.GemsBoard.prototype.update = function() {
   if(this.game.input.activePointer.justReleased()) {
     this.clearSelectedGem();
   }
+
+  this.points.flush();
 }
 
 Game.GemsBoard.prototype.isSwapping = function() {

@@ -13,7 +13,7 @@ Game.GemsSwipe.prototype.run = function() {
       cursorY       = this.game.input.activePointer.y,
       cursorGemPosX = this.board.convertToGemPosition(cursorX, 'x'),
       cursorGemPosY = this.board.convertToGemPosition(cursorY, 'y'),
-      gemsMatches   = new Game.GemsMatches(this.board);
+      gemsMatches   = this.board.gemsMatches;
 
   this.gem1 = this.board.getGemByPos(cursorGemPosX, cursorGemPosY),
   this.gem2 = this.board.selectedGem;

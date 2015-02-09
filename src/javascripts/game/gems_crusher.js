@@ -5,12 +5,8 @@ Game.GemsCrusher = function(board) {
 Game.GemsCrusher.prototype = {
   run: function() {
     var self = this,
-        gemsMatches = new Game.GemsMatches(this.board),
-        gems;
+        gems = this.board.gemsMatches.matches;
 
-    gemsMatches.run();
-    gems = gemsMatches.matches;
- 
     gems.forEach(function(gem) {
       gem.loadTexture('explosion', 0);
       gem.destroying = true;

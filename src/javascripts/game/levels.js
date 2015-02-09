@@ -3,18 +3,14 @@ Game.Levels = {
     active: [1],
     1: {
       active: true,
-      numberOfTiles: 4,
-      xSize: 6,
-      ySize: 6,
-      rows: 6,
-      cols: 6,
+      numberOfTiles: 2,
+      xSize: 3,
+      ySize: 2,
+      rows: 2,
+      cols: 3,
       board: [
-        [1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1, 1]
+        [1, 1, 1],
+        [1, 1, 1]
       ]
     },
   },
