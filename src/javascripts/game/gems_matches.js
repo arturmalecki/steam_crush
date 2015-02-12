@@ -51,11 +51,8 @@ Game.GemsMatches.prototype.countSameGems = function(gemFrame, gemX, gemY, moveX,
       count = 0,
       level = this.board.level;
 
-  this.boardChecked[x][y] = 1
-
   while(gemFrame && x < level.xSize && x >= 0 && y < level.ySize && y >= 0 && this.board.getGemFrame(x, y) === gemFrame) {
     count += 1;
-    this.boardChecked[x][y] = 1
     x += moveX;
     y += moveY;
   }
@@ -67,6 +64,7 @@ Game.GemsMatches.prototype.addRangeMatches = function(x1, y1, x2, y2) {
   var x, y, gem, self = this;
   for(x = x1; x <= x2; x++) {
     for(y = y1; y <= y2; y++) {
+      this.boardChecked[x][y] = 1
       gem = this.board.getGem(x, y);
       this.matches.push(gem);
     }
