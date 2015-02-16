@@ -10,7 +10,7 @@ Game.SelectLevel = {
       title = new Phaser.Text(this.game, 50, 25, "Select Level:", {font: '50px Arial', fill: '#ffffff'});
       group.add(title);
 
-      ['I', 'II', 'III', 'IV'].forEach(function(level, index) {
+      Game.Levels.active.forEach(function(level, index) {
         var btnX = 50,
             btnY = 100 + (index * 125),
             btn;

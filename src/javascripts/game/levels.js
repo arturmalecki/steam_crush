@@ -1,4 +1,5 @@
 Game.Levels = {
+  active: ['I', 'II'],
   I: {
     active: [1],
     1: {

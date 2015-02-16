@@ -15,6 +15,7 @@ Game.Game = {
   update: function() {
     if(!Game.G.paused) {
       this.gameTopBar.updateScoreText(this.gemsBoard.points.points);
+      this.gameTopBar.updateMaxScoreText(localStorage.getItem("level_" + Game.User.level + "_" + Game.User.sublevel + "_max"));
       this.gemsBoard.update();
     }
   },

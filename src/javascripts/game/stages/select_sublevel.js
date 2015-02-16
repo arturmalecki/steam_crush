@@ -13,10 +13,13 @@ Game.SelectSublevel = {
       Game.Levels[Game.User.level].active.forEach(function(level, index) {
         var btnX = (index * 200) + 50,
             btnY = 100,
-            btn;
+            btn, max,
+            points = localStorage.getItem('level_' + Game.User.level + '_' + level + '_max');
         btn = new LabelButton(this.game, btnX, btnY, 'selectLevelBg', level, self.selectLevel, self);
+        max = new Phaser.Text(this.game, btnX, btnY + 100, points.toString(), {font: '50px Arial', fill: '#ffffff'});
         btn.level = level;
         group.add(btn);
+        group.add(max);
       });
 
       group.scale = new Phaser.Point(Game.scaleValue, Game.scaleValue);

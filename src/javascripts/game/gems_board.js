@@ -75,6 +75,7 @@ Game.GemsBoard.prototype.update = function() {
   }
 
   this.points.flush();
+  this.points.persist(Game.User.level + "_" + Game.User.sublevel);
 }
 
 Game.GemsBoard.prototype.isSwapping = function() {
