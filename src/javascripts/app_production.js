@@ -3,7 +3,6 @@
 //= require ./lib/phaser
 //= require_tree ./animations
 //= require ./game/core
-//= require ./game/local_storage
 //= require ./game/levels
 //= require ./game/views/background
 //= require ./game/views/footer_info
