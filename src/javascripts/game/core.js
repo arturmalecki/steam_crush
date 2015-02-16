@@ -23,9 +23,10 @@ Game.Core = {
   setupLocalStorage: function() {
     Game.Levels.active.forEach(function(level) {
       Game.Levels[level].active.forEach(function(sublevel) {
-        var max_key = "level_" + level + "_" + sublevel + "_max";
+        var max_key = "level_" + level + "_" + sublevel + "_max",
+            value = localStorage.getItem(max_key);
 
-        if(typeof(parseInt(localStorage.getItem(max_key))) !== "number") {
+        if(value === null) {
           localStorage.setItem(max_key, 0);
         }
       });
