@@ -12,6 +12,10 @@ Game.Preloader = {
     this.load.image('background', Game.assetsPath + 'bg.png');
     this.load.image('groupBg', Game.assetsPath + 'group_bg.jpg');
     this.load.image('selectLevelBg', Game.assetsPath + 'select_level.png');
+    this.load.image('cityBg', Game.assetsPath + 'sketch_city.jpg');
+
+    this.load.image('home', Game.assetsPath + 'home.png');
+    this.load.image('playBtn', Game.assetsPath + 'play_button.png');
   },
 
   create: function() {
