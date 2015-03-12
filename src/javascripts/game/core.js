@@ -11,9 +11,9 @@ Game.Core = {
   },
   resizeGame: function(game) {
     if(game.device.desktop) {
-      height = window.innerHeight - 70;
+      height = window.innerHeight - 140;
       scale = height / Game.height;
-      game.scale.setGameSize(Game.width * scale, window.innerHeight - 70);
+      game.scale.setGameSize(Game.width * scale, window.innerHeight - 140);
       Game.scaleValue = scale;
     } else {
       game.scale.setGameSize(window.innerWidth, window.innerHeight);
