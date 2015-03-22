@@ -5,11 +5,7 @@ Game.MainMenu = {
 
     Game.Views.default(this.game);
 
-    this.game.add.image(
-      -(homeBg.width / 2 - this.game.width / 2),
-      -(homeBg.height / 2 - this.game.height / 2),
-      'homeBg'
-    );
+    bg = this.game.add.image(0, 0, 'homeBg');
 
     group = this.game.add.group();
 
@@ -17,14 +13,17 @@ Game.MainMenu = {
       new Phaser.Image(this.game, 0, 0, 'home')
     );
 
-    playBtn = new Phaser.Button(this.game, 200, 410, 'playBtn', function() {
+    playBtn = new Phaser.Button(this.game, 120, 330, 'playBtn', function() {
       this.state.start('SelectLevel');
     }, this);
 
     group.add(playBtn);
 
     group.scale = new Phaser.Point(Game.scaleValue, Game.scaleValue);
-    group.position = new PIXI.Point((this.game.width / 2) - (group.width / 2) , 50);
+    bg.scale = new Phaser.Point(Game.scaleValue, Game.scaleValue);
+    bg.x = -(bg.width / 2 - this.game.width / 2);
+    bg.y = -(bg.height / 2 - this.game.height / 2);
+    group.position = new PIXI.Point((this.game.width / 2) - (group.width / 2) , 300 * Game.scaleValue);
   },
   render: function() {},
   update: function() {}
