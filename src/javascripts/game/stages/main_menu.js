@@ -1,6 +1,6 @@
 Game.MainMenu = {
   create: function() {
-    var group, playBtn,
+    var group, playBtn, bg,
         homeBg = this.game.cache.getImage('homeBg');
 
     Game.Views.default(this.game);

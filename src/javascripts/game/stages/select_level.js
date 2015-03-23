@@ -1,6 +1,6 @@
 Game.SelectLevel = {
   create: function() {
-      var title, self = this, group;
+      var title, self = this, group, btnY;
 
       Game.Views.default(this.game);
 
@@ -12,13 +12,15 @@ Game.SelectLevel = {
 
       Game.Levels.active.forEach(function(level, index) {
         var btnX = 50,
-            btnY = 100 + (index * 125),
             btn;
+
+        btnY = 100 + (index * 125),
         btn = new LabelButton(this.game, btnX, btnY, 'selectLevelBg', level, self.selectLevel, self);
         btn.level = level;
         group.add(btn);
       });
-
+      
+      group.add(new LabelButton(this.game, 50, btnY + 125, 'selectLevelBg', 'Back', this.back, this));
       group.scale = new Phaser.Point(Game.scaleValue, Game.scaleValue);
       group.position = new PIXI.Point((this.game.width / 2) - (group.width / 2) , 50);
   },
@@ -29,5 +31,9 @@ Game.SelectLevel = {
   selectLevel: function() {
     Game.User.level = arguments[0].level;
     this.state.start('SelectSublevel');
+  },
+  
+  back: function() {
+    this.state.start('MainMenu');
   }
 }
