@@ -51,7 +51,7 @@ Game.GemsDrop.prototype.refillBoard = function() {
       while(this.board.getGem(gemX, gemY)) {
         gemY -= 1;
       }
-      gem = new Game.Gem(this.board.game, gemX * gemSize, gemY * gemSize, 'tiles', Math.floor((Math.random() * self.board.level.numberOfTiles) + 1))
+      gem = new Game.Gem(this.board.game, gemX * gemSize, gemY * gemSize, 'elements', Math.floor((Math.random() * self.board.level.numberOfTiles) + 1))
       gem.events.onInputDown.add(this.board.selectGem, this.board)
       this.board.add(gem);
     }

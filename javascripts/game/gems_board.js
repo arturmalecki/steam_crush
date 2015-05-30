@@ -15,7 +15,7 @@ Game.GemsBoard = function(game, gemSize) {
 
   this.scale = new Phaser.Point(Game.scaleValue, Game.scaleValue);
   this.x     = (game.width / 2) - (this.width / 2);
-  this.y     = 50; //(game.height / 2) - (this.rows * gemSize / 2);
+  this.y     = 50;
 }
 
 Game.GemsBoard.prototype = Object.create(Phaser.Group.prototype);
@@ -40,7 +40,7 @@ Game.GemsBoard.prototype.populate = function() {
 
   this.eachGem(function(x, y) {
     randomGem = Math.floor((Math.random() * self.level.numberOfTiles) + 1);
-    gem = new Game.Gem(this.game, this.gemSize * x, this.gemSize * y, 'tiles', randomGem);
+    gem = new Game.Gem(this.game, this.gemSize * x, this.gemSize * y, 'elements', randomGem);
     gem.events.onInputDown.add(this.selectGem, this);
     this.add(gem);
   }, this);
