@@ -1,0 +1,26 @@
+Game.Preloader = {
+  preload: function() {
+    var loader = this.add.image(this.game.world.centerX - 146, 50, 'loader');
+    this.load.setPreloadSprite(loader);
+
+    this.load.spritesheet('elements', '<%= asset_path('sprite-elements.png') %>', 75, 75);
+
+    this.load.spritesheet('playIconBtn', '<%= asset_path('play_icon.png') %>', 58, 65.5);
+    this.load.spritesheet('pauseIconBtn', '<%= asset_path('pause_icon.png') %>', 30, 28);
+    this.load.spritesheet('explosion', '<%= asset_path('explosion.png') %>', 75, 75);
+    this.load.image('topBar', '<%= asset_path('top_bar.png') %>');
+    this.load.image('pauseMenuBg', '<%= asset_path('pause_menu_bg.png') %>');
+    this.load.image('background', '<%= asset_path('bg.png') %>');
+    this.load.image('groupBg', '<%= asset_path('group_bg.jpg') %>');
+    this.load.image('selectLevelBg', '<%= asset_path('select_level.png') %>');
+    this.load.image('cityBg', '<%= asset_path('sketch_city.jpg') %>');
+
+    this.load.image('home', '<%= asset_path('home.png') %>');
+    this.load.image('homeBg', '<%= asset_path('home_bg.jpg') %>');
+    this.load.image('playBtn', '<%= asset_path('play_button.png') %>');
+  },
+
+  create: function() {
+    this.state.start('MainMenu')
+  }
+}
