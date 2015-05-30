@@ -1,11 +1,5 @@
 var Game = {
-  assetsPath: function() {
-    if(window.gameAssetsPath === undefined) {
-      return 'assets/';
-    } else {
-      return window.gameAssetsPath;
-    }
-  }(),
+  assetsPath: 'assets/',
   G: {
     menuItemFadeDelay: 75,
     paused: false,

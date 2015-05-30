@@ -10,15 +10,12 @@ Game.Core = {
     }
   },
   resizeGame: function(game) {
-    if(game.device.desktop) {
-      height = window.innerHeight - 150;
-      scale = height / Game.height;
-      game.scale.setGameSize(Game.width * scale, window.innerHeight - 150);
-      Game.scaleValue = scale;
-    } else {
-      game.scale.setGameSize(window.innerWidth, window.innerHeight);
-      Game.Core.calculateScale();
-    }
+    //height = window.innerHeight;
+    //scale = height / Game.height;
+    //game.scale.setGameSize(Game.width * scale, window.innerHeight);
+    //Game.scaleValue = scale;
+    game.scale.setGameSize(window.innerWidth, window.innerHeight);
+    Game.Core.calculateScale();
   },
   setupLocalStorage: function() {
     Game.Levels.active.forEach(function(level) {
