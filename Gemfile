@@ -1,5 +1,4 @@
 source 'https://rubygems.org'
 
-gem 'sprockets'
-gem 'rake'
-gem 'uglifier'
+gem 'rails', '4.2.1'
+gem 'uglifier', '>= 1.3.0'
