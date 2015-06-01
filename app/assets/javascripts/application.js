@@ -19,6 +19,13 @@
 //= require game/views/game_top_bar
 //= require game/views/label_button
 //= require game/views/default
+//= require game/gems_board_states/check_win
+//= require game/gems_board_states/clear_state
+//= require game/gems_board_states/drop
+//= require game/gems_board_states/find_pairs
+//= require game/gems_board_states/idle
+//= require game/gems_board_states/process_action
+//= require game/gems_board_states/refill
 //= require game/levels
 //= require game/gem
 //= require game/points

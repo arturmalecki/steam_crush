@@ -1,6 +1,6 @@
 Game.Boot = {
   preload: function() {
-    this.load.image('loader', Game.assetsPath + 'loading.png');
+    this.load.image('loader', '<%= asset_path('loading.png') %>');
     Game.Core.resizeGame(this.game);
     Game.Core.setupLocalStorage();
   },

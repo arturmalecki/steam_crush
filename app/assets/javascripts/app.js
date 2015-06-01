@@ -11,6 +11,7 @@ var Game = {
     level: 1,
     sublevel: 1
   },
+  GemsBoardStates: {},
   Views: {},
   Animations: {},
   Core: {},

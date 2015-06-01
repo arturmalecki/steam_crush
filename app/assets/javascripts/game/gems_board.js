@@ -16,6 +16,16 @@ Game.GemsBoard = function(game, gemSize) {
   this.scale = new Phaser.Point(Game.scaleValue, Game.scaleValue);
   this.x     = (game.width / 2) - (this.width / 2);
   this.y     = 50;
+  this.states = {
+    find_pairs: new Game.GemsBoardStates.FindPairs(this),
+    check_win: new Game.GemsBoardStates.CheckWin(this),
+    clear_state: new Game.GemsBoardStates.ClearState(this),
+    idle: new Game.GemsBoardStates.Idle(this),
+    process_action: new Game.GemsBoardStates.ProcessAction(this),
+    refill: new Game.GemsBoardStates.Refill(this),
+    drop: new Game.GemsBoardStates.Drop(this)
+  }
+  this.state = this.states.find_pairs;
 }
 
 Game.GemsBoard.prototype = Object.create(Phaser.Group.prototype);
@@ -46,8 +56,22 @@ Game.GemsBoard.prototype.populate = function() {
   }, this);
 }
 
+Game.GemsBoard.prototype.setStateTo = function(state) {
+  this.state.exitAction();
+  this.state = this.states[state];
+  this.state.entryAction();
+}
+
 Game.GemsBoard.prototype.update = function() {
-  var level = this.level,
+  var state = this.state.update();
+
+  if(!!state) {
+    this.state.exitAction();
+    this.state = state;
+    this.state.entryAction();
+  }
+
+  /*var level = this.level,
       x, y, gem;
 
   for(x = 0; x < level.xSize; x++) {
@@ -76,6 +100,7 @@ Game.GemsBoard.prototype.update = function() {
 
   this.points.flush();
   this.points.persist(Game.User.level + "_" + Game.User.sublevel);
+  */
 }
 
 Game.GemsBoard.prototype.isSwapping = function() {
