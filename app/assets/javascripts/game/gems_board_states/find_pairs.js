@@ -5,16 +5,17 @@ Game.GemsBoardStates.FindPairs = function(board) {
 
 Game.GemsBoardStates.FindPairs.prototype = {
   update: function() {
-    var gemsMatches = this.board.gemsMatches;
+    var gemsMatches = this.board.gemsMatches,
+        gemsToDestroy;
 
     if(!this.destroyed) {
       this.destroyed = true;
       console.log('destroy');
-      gemsMatches.run();
-      if(gemsMatches.matches.length === 0) {
+      gemsToDestroy = gemsMatches.fetch();
+      if(gemsToDestroy.length === 0) {
         return this.board.states.check_win;
       } else {
-        this.board.gemsCrusher.run();
+        this.board.gemsCrusher.run(gemsToDestroy);
       }
     }
   },

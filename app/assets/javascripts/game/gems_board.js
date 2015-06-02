@@ -10,12 +10,13 @@ Game.GemsBoard = function(game, gemSize) {
   this.level           = Game.Levels[Game.User.level][Game.User.sublevel];
   this.gemsMatches     = new Game.GemsMatches(this);
   this.points          = new Game.Points(this);
+  this.deadGemsGroup   = game.add.group();
 
   this.populate();
 
   this.scale = new Phaser.Point(Game.scaleValue, Game.scaleValue);
   this.x     = (game.width / 2) - (this.width / 2);
-  this.y     = 50;
+  this.y     = 200;
   this.states = {
     find_pairs: new Game.GemsBoardStates.FindPairs(this),
     check_win: new Game.GemsBoardStates.CheckWin(this),

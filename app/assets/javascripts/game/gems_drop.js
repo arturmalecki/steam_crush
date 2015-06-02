@@ -1,5 +1,6 @@
 Game.GemsDrop = function(board) {
   this.board = board;
+  this.toDrop = 0;
 }
 
 Game.GemsDrop.prototype.toFieldLock = function(x, y) {
@@ -10,7 +11,8 @@ Game.GemsDrop.prototype.run = function() {
   var level = this.board.level, 
       x, y, gem, gemToDrop;
 
-  this.refillBoard();
+  this.toDrop = 0;
+
   for(y = level.ySize - 1; y >=0; y--) {
     for(x = level.xSize - 1; x >= 0; x--) {
       if(level.board[y][x] !== 0) {
@@ -60,7 +62,17 @@ Game.GemsDrop.prototype.refillBoard = function() {
 
 Game.GemsDrop.prototype.dropGem = function(gem, dropToY) {
   if(gem) {
+    this.toDrop += 1;
     gem.dropping = true;
-    this.board.game.add.tween(gem).to({y: dropToY * this.board.gemSize}, 500, Phaser.Easing.Bounce.Out, true).onComplete.add(function(gem) { gem.dropping = false; gem.refresh(); }, this);
+    this.board.game.add.tween(gem).to({y: dropToY * this.board.gemSize}, 500, Phaser.Easing.Bounce.Out, true).onComplete.add(this.onDropCompleted, this);
+  }
+}
+
+Game.GemsDrop.prototype.onDropCompleted = function(gem, dropToY) {
+  gem.dropping = false;
+  gem.refresh();
+  this.toDrop -= 1;
+  if(this.toDrop === 0) {
+    this.board.setStateTo('find_pairs');
   }
 }

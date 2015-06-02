@@ -4,8 +4,8 @@ var Game = {
     menuItemFadeDelay: 75,
     paused: false,
     gemSize: 75,
-    gemSpacing: 2,
-    gemSizeWithSpacing: 77
+    gemSpacing: 0,
+    gemSizeWithSpacing: 75
   },
   User: {
     level: 1,

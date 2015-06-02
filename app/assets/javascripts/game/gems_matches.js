@@ -9,7 +9,7 @@ Game.GemsMatches.prototype.hasMatches = function() {
   return this.matches.length > 0;
 }
 
-Game.GemsMatches.prototype.run = function() {
+Game.GemsMatches.prototype.fetch = function() {
   var level = this.board.level,
       x, y, gem, frame;
 
@@ -27,6 +27,7 @@ Game.GemsMatches.prototype.run = function() {
       }
     }
   }
+  return this.matches;
 }
 
 Game.GemsMatches.prototype.findMatchesFor = function(gemFrame, gemX, gemY) {
