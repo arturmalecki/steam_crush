@@ -11,6 +11,8 @@ Game.GemsBoard = function(game, gemSize) {
   this.gemsMatches     = new Game.GemsMatches(this);
   this.points          = new Game.Points(this);
   this.deadGemsGroup   = game.add.group();
+  this.deadGemsGroup.x = -1000;
+  this.deadGemsGroup.y = -1000;
 
   this.populate();
 
@@ -117,9 +119,15 @@ Game.GemsBoard.prototype.isDropping = function() {
 }
 
 Game.GemsBoard.prototype.selectGem = function(gem) {
-  if(!this.isSwapping() && !this.selectedGem) {
-    this.selectedGem = gem;
-    this.selectedGem.angle = 10;
+  console.log("Clicked: ", gem.id);
+  if(this.state instanceof Game.GemsBoardStates.Idle) {
+    if(!!this.selectedGem) {
+      this.selectedGem2 = gem;
+      this.setStateTo('process_action');
+    } else {
+      this.selectedGem = gem;
+      this.selectedGem.angle = 10;
+    }
   }
 }
 
@@ -170,5 +178,6 @@ Game.GemsBoard.prototype.clearSelectedGem = function() {
     this.selectedGem.angle = 0;
   }
   this.selectedGem = undefined;
+  this.selectedGem2 = undefined;
 }
 
