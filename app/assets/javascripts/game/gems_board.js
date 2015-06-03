@@ -18,7 +18,7 @@ Game.GemsBoard = function(game, gemSize) {
 
   this.scale = new Phaser.Point(Game.scaleValue, Game.scaleValue);
   this.x     = (game.width / 2) - (this.width / 2);
-  this.y     = 200;
+  this.y     = 100;
   this.states = {
     find_pairs: new Game.GemsBoardStates.FindPairs(this),
     check_win: new Game.GemsBoardStates.CheckWin(this),
@@ -51,8 +51,19 @@ Game.GemsBoard.prototype.populate = function() {
   var gem, randomGem,
       self = this;
 
+  /*var testBoard = [
+    [1, 1, 1, 3, 2],
+    [1, 3, 2, 2, 3],
+    [1, 3, 1, 3, 2],
+    [2, 5, 4, 2, 3],
+    [3, 1, 5, 1, 2],
+    [2, 3, 3, 2, 3],
+    [1, 2, 3, 1, 2]
+  ];*/
+
   this.eachGem(function(x, y) {
     randomGem = Math.floor((Math.random() * self.level.numberOfTiles) + 1);
+    //randomGem = testBoard[y][x];
     gem = new Game.Gem(this.game, this.gemSize * x, this.gemSize * y, 'elements', randomGem);
     gem.events.onInputDown.add(this.selectGem, this);
     this.add(gem);

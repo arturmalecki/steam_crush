@@ -5,9 +5,15 @@ Game.GemsCrusher = function(board) {
 
 Game.GemsCrusher.prototype = {
   run: function(gems) {
-    var self = this;
+    var self = this,
+        crushCounterTemHash = {};
 
-    this.crushCounter = gems.length;
+    gems.forEach(function(gem) {
+      if(!crushCounterTemHash[gem.id]) {
+        self.crushCounter += 1;
+        crushCounterTemHash[gem.id] = true;
+      }
+    });
     gems.forEach(function(gem) {
       var animation = gem.animations.add('explosion', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
 
@@ -17,7 +23,6 @@ Game.GemsCrusher.prototype = {
       animation.onComplete.add(function() {
         self.crushCounter--;
         self.board.deadGemsGroup.add(arguments[0]);
-        console.log("---- ", self.crushCounter, gem.id, gem.alive);
         if(self.crushCounter === 0) {
           self.board.setStateTo('refill');
         }

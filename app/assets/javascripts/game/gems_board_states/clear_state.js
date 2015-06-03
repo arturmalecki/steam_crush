@@ -5,6 +5,7 @@ Game.GemsBoardStates.ClearState = function(board) {
 Game.GemsBoardStates.ClearState.prototype = {
   update: function() {
     console.log("Clear State");
+    this.board.clearSelectedGem();
     return this.board.states.idle;
   },
 
