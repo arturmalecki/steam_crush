@@ -9,57 +9,19 @@ Game.GemsSwipe = function(board) {
 }
 
 Game.GemsSwipe.prototype.run = function(gem1, gem2) {
-  /*var cursorX       = this.game.input.activePointer.x,
-      cursorY       = this.game.input.activePointer.y,
-      cursorGemPosX = this.board.convertToGemPosition(cursorX, 'x'),
-      cursorGemPosY = this.board.convertToGemPosition(cursorY, 'y'),
-      gemsMatches   = this.board.gemsMatches;
-
-  this.gem1 = this.board.getGemByPos(cursorGemPosX, cursorGemPosY),
-  this.gem2 = this.board.selectedGem;*/
-
   this.gem1 = gem1;
   this.gem2 = gem2;
   return this.isSwipePossible();
 }
 
 Game.GemsSwipe.prototype.isSwipePossible = function(gem1, gem2) {
-  this.gem1 = gem1;
-  this.gem2 = gem2;
+  var xDiff = Math.abs((gem1.x - gem2.x) / Game.G.gemSize),
+      yDiff = Math.abs((gem1.y - gem2.y) / Game.G.gemSize);
 
-  if (this.isCursorOnSelectedGem()) {
-    return false;
-  } else if(!this.areGemsInProperState()) {
-    return false;
-  } else if(this.isCursorOutsideBoard()) {
-    return false;
-  } else if(!this.isCursorIsOnValidPosition()) {
-    return false;
-  }
+  if(xDiff > 1) { return false }
+  if(yDiff > 1) { return false }
+
   return true;
-}
-
-Game.GemsSwipe.prototype.areGemsInProperState = function() {
-  return !this.gem2.destroying && !this.gem1.destroying;
-}
-
-Game.GemsSwipe.prototype.isCursorOnSelectedGem = function() {
-  return this.gem2.x === this.gem1.x && this.gem2.y === this.gem1.y;
-}
-
-Game.GemsSwipe.prototype.isCursorOutsideBoard = function() {
-  return this.gem1.x < 0 || this.gem1.y < 0;
-}
-
-Game.GemsSwipe.prototype.isCursorIsOnValidPosition = function() {
-  var cursorGemIndexX   = this.gem1.x / this.board.gemSize,
-      cursorGemIndexY   = this.gem1.y / this.board.gemSize,
-      selectedGemIndexX = this.gem2.x / this.board.gemSize,
-      selectedGemIndexY = this.gem2.y / this.board.gemSize,
-      indexX            = Math.abs(selectedGemIndexX - cursorGemIndexX),
-      indexY            = Math.abs(selectedGemIndexY - cursorGemIndexY);
-  
-  return (indexX === 1 && indexY === 0) || (indexX === 0 && indexY === 1);
 }
 
 Game.GemsSwipe.prototype.revert = function() {
