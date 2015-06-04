@@ -64,7 +64,7 @@ Game.Levels = {
     active: [1],
     1: {
       active: true,
-      numberOfTiles: 9,
+      numberOfTiles: 8,
       xSize: 8,
       ySize: 10,
       rows: 10,

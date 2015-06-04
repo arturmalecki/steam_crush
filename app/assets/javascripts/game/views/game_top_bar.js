@@ -6,7 +6,7 @@ Game.Views.GameTopBar = function(game, context) {
   game.add.existing(this.pausePanel);
   //game.add.sprite(0, 0, 'topBar');
   //game.add.button(280, 10, 'pauseIconBtn', this.pauseGame, this, 1, 0, 1, 1);
-  button = new LabelButton(game, game.width - 50, 0, 'selectLevelBg', 'Back', function() { game.state.start('MainMenu') }, this);
+  button = new LabelButton(game, game.width - 100, 0, 'selectLevelBg', 'Back', function() { game.state.start('MainMenu') }, this);
   button.scale = new Phaser.Point(Game.scaleValue, Game.scaleValue);
   game.add.existing(button);
 
