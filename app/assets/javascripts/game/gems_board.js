@@ -85,36 +85,6 @@ Game.GemsBoard.prototype.update = function() {
     this.state.entryAction();
   }
 
-  /*var level = this.level,
-      x, y, gem;
-
-  for(x = 0; x < level.xSize; x++) {
-    for(y = 0; y < level.ySize; y++) {
-      gem = this.getGem(x, y);
-      if(gem && !gem.alive) {
-        gem.destroy();
-      }
-    }
-  };
-  this.gemsMatches.run();
-
-  if(!this.isSwapping()){
-    if(this.selectGem) {
-      this.gemsSwipe.run();
-    }
-    this.gemsCrusher.run();
-  }
-  if(!this.isSwapping() && !this.isDropping()){
-    this.gemsDrop.run();
-  }
-
-  if(this.game.input.activePointer.justReleased()) {
-    this.clearSelectedGem();
-  }
-
-  this.points.flush();
-  this.points.persist(Game.User.level + "_" + Game.User.sublevel);
-  */
 }
 
 Game.GemsBoard.prototype.isSwapping = function() {
