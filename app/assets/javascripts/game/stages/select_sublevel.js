@@ -1,17 +1,15 @@
 Game.SelectSublevel = {
   create: function() {
-      var title, self = this, group, btnY;
+      var title, self = this, group, btnY, bt;
+
+      bg = this.game.add.image(0, 0, Game.Levels[Game.User.level].bg);
 
       Game.Views.default(this.game);
 
       group = this.game.add.group();
-      group.add(new Phaser.TileSprite(this.game, 0, 0, 600, 600, 'groupBg'));
-      
-      title = new Phaser.Text(this.game, 50, 25, "Select Sublevel:", {font: '50px Arial', fill: '#ffffff'});
-      group.add(title);
 
       Game.Levels[Game.User.level].active.forEach(function(level, index) {
-        var btnX = (index * 200) + 50,
+        var btnX = (index * 200),
             btn, max,
             points = localStorage.getItem('level_' + Game.User.level + '_' + level + '_max');
 
@@ -23,9 +21,13 @@ Game.SelectSublevel = {
         group.add(max);
       });
 
-      group.add(new LabelButton(this.game, 50, btnY + 225, 'selectLevelBg', 'Back', this.back, this));
+      group.add(new LabelButton(this.game, 0, btnY + 225, 'selectLevelBg', 'Back', this.back, this));
       group.scale = new Phaser.Point(Game.scaleValue, Game.scaleValue);
       group.position = new PIXI.Point((this.game.width / 2) - (group.width / 2) , 50);
+
+      bg.scale = new Phaser.Point(Game.scaleValue, Game.scaleValue);
+      bg.x = -(bg.width / 2 - this.game.width / 2);
+      bg.y = -(bg.height / 2 - this.game.height / 2);
   },
   render: function() {},
 

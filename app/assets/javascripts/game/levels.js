@@ -2,6 +2,7 @@ Game.Levels = {
   active: ['I', 'II', 'III'],
   I: {
     active: [1],
+    bg: 'mineBg',
     1: {
       active: true,
       numberOfTiles: 5,
@@ -22,6 +23,7 @@ Game.Levels = {
   },
   II: {
     active: [1, 2],
+    bg: 'factoryBg',
     1: {
       active: true,
       numberOfTiles: 6,
@@ -62,6 +64,7 @@ Game.Levels = {
   },
   III: {
     active: [1],
+    bg: 'seaBg',
     1: {
       active: true,
       numberOfTiles: 8,
