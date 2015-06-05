@@ -1,10 +1,10 @@
 var PausePanel = function(game) {
-    var bg = game.add.sprite(0, 0, 'pauseMenuBg');
+    //var bg = game.add.sprite(0, 0, 'pauseMenuBg');
     this.game = game;
 
     Phaser.Group.call(this, game);
 
-    this.add(bg);
+    //this.add(bg);
     this.x = this.game.world.centerX - 101;
     this.y = -300;
     this.alpha = 0;
