@@ -5,19 +5,16 @@ Game.Levels = {
     bg: 'mineBg',
     1: {
       active: true,
-      numberOfTiles: 5,
-      xSize: 5,
-      ySize: 7,
-      rows: 5,
-      cols: 7,
+      numberOfTiles: 2,
+      xSize: 3,
+      ySize: 4,
+      rows: 3,
+      cols: 4,
       board: [
-        [1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1],
-        [1, 1, 1, 1, 1]
+        [1, 1, 1],
+        [1, 1, 1],
+        [1, 1, 1],
+        [1, 1, 1]
       ]
     },
   },

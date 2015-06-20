@@ -5,15 +5,20 @@ Game.GemsBoardStates.Idle = function(board) {
 Game.GemsBoardStates.Idle.prototype = {
   update: function() {
     var pointer = this.board.game.input.activePointer;
-    if(pointer.isDown) {
-      if(!!this.board.selectedGem && !this.board.selectedGem2) {
-        var gemPosX = this.board.convertToGemPosition(pointer.x, 'x'),
-            gemPosY = this.board.convertToGemPosition(pointer.y, 'y'),
-            gem = this.board.getGemByPos(gemPosX, gemPosY);
+    if(this.board.runRefill === true) {
+      this.board.runRefill = false;
+      this.board.setStateTo('refill');
+    } else {
+      if(pointer.isDown) {
+        if(!!this.board.selectedGem && !this.board.selectedGem2) {
+          var gemPosX = this.board.convertToGemPosition(pointer.x, 'x'),
+              gemPosY = this.board.convertToGemPosition(pointer.y, 'y'),
+              gem = this.board.getGemByPos(gemPosX, gemPosY);
 
-        if(gem.id !== this.board.selectedGem.id) {
-          this.board.selectedGem2 = gem;
-          this.board.setStateTo('process_action');
+          if(gem.id !== this.board.selectedGem.id) {
+            this.board.selectedGem2 = gem;
+            this.board.setStateTo('process_action');
+          }
         }
       }
     }

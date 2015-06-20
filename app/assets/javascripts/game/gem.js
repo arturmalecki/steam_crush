@@ -23,3 +23,13 @@ Game.Gem.prototype.changePosition = function(x, y) {
   this.refresh();
 }
 
+Game.Gem.prototype.createBomb = function() {
+  this.bomb = true;
+  this.frame = 8;
+}
+
+
+Game.Gem.prototype.isBomb = function() {
+  return this.frame === 8;
+}
+

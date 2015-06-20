@@ -20,6 +20,12 @@ Game.Preloader = {
   },
 
   create: function() {
-    this.state.start('MainMenu')
+    <% if Rails.env.production? %>
+      this.state.start('MainMenu');
+    <% else %>
+      this.state.start("Game");
+      Game.User.level = 'I';
+      Game.User.sublevel = 1;
+    <% end %>
   }
 }

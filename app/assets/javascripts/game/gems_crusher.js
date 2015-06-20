@@ -1,34 +1,37 @@
 Game.GemsCrusher = function(board) {
   this.board = board;
-  this.crushCounter = 0;
 }
 
 Game.GemsCrusher.prototype = {
-  run: function(gems) {
+  run: function(setOfHits) {
     var self = this,
-        crushCounterTemHash = {};
+        crushCounterHash = {},
+        index;
 
-    gems.forEach(function(gem) {
-      if(!crushCounterTemHash[gem.id]) {
-        self.crushCounter += 1;
-        crushCounterTemHash[gem.id] = true;
+    setOfHits.forEach(function(gems) {
+      if(gems.length >= 4) {
+        index = Math.ceil((gems.length - 2)/2);
+        gems[index].createBomb();
+        gems[index] = undefined;
       }
-    });
-    gems.forEach(function(gem) {
-      var animation = gem.animations.add('explosion', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+      gems.forEach(function(gem) {
+        var animation;
+        
+        if(gem) {
+          animation = gem.animations.add('explosion', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
 
-      gem.loadTexture('explosion', 0);
-      gem.destroying = true;
+          gem.loadTexture('explosion', 0);
+          gem.destroying = true;
 
-      animation.onComplete.add(function() {
-        self.crushCounter--;
-        self.board.deadGemsGroup.add(arguments[0]);
-        if(self.crushCounter === 0) {
-          self.board.setStateTo('refill');
+          animation.onComplete.add(function() {
+            self.board.deadGemsGroup.add(arguments[0]);
+            self.board.runRefill = true;
+          }, self);
+          animation.play(20, false);
         }
-      }, self);
-      animation.play(20, false);
+      });
     });
-  },
+    self.board.setStateTo('idle');
+  }
 }
 
