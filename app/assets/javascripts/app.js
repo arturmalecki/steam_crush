@@ -15,7 +15,7 @@ var Game = {
   Views: {},
   Animations: {},
   Core: {},
-  version: '0.9.0',
+  version: '0.9.1',
   parentId: 'steam-crush-container',
   width: 640,
   height: 960,
