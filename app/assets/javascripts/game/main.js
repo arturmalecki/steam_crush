@@ -1,5 +1,7 @@
 var game = new Phaser.Game(Game.width, Game.height, Phaser.CANVAS, Game.parentId);
 
+document.getElementsByClassName('loader')[0].hidden = true;
+
 game.state.add('Boot', Game.Boot);
 game.state.add('Preloader', Game.Preloader);
 game.state.add('MainMenu', Game.MainMenu);
