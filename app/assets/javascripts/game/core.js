@@ -14,7 +14,12 @@ Game.Core = {
     //scale = height / Game.height;
     //game.scale.setGameSize(Game.width * scale, window.innerHeight);
     //Game.scaleValue = scale;
-    game.scale.setGameSize(window.innerWidth, window.innerHeight);
+    if(game.device.desktop) {
+      document.getElementsByClassName('top_ad')[0].hidden = true;
+      game.scale.setGameSize(window.innerWidth, window.innerHeight);
+    } else {
+      game.scale.setGameSize(window.innerWidth, window.innerHeight - 50);
+    }
     Game.Core.calculateScale();
   },
   setupLocalStorage: function() {
